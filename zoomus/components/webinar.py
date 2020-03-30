@@ -65,6 +65,9 @@ class WebinarComponentV2(base.BaseComponent):
         "WEBINAR_ATTENDEE_LIST": "/webinars/{}/registrants",
         "WEBINAR_ATTENDEE_DETAIL": "/webinars/{}/registrants/{}",
         "WEBINAR_ATTENDEE_STATUS": "/webinars/{}/registrants/status",
+        "WEBINAR_ADD_PANELIST": "/webinars/{}/panelists",
+        "WEBINAR_REMOVE_PANELIST": "/webinars/{}/panelists/{}",
+        "WEBINAR_REMOVE_PANELISTS": "/webinars/{}/panelists/"
     }
 
     def list(self, user_id, **kwargs):
@@ -181,6 +184,47 @@ class WebinarComponentV2(base.BaseComponent):
         """
         return self.put_request(
             endpoint=self.API_ENDPOINTS["WEBINAR_ATTENDEE_STATUS"].format(webinar_id),
+            params=kwargs,
+            data=payload
+        )
+
+    def add_panelist(self, webinar_id, payload=None, **kwargs):
+        """
+        Method to add a Panelist to Webinar.
+        :param webianr_id: Webinar ID
+        :param payload: Dict containing details.
+        :param kwargs: Query params
+        :return: Response Object
+        """
+        return self.post_request(
+            endpoint=self.API_ENDPOINTS["WEBINAR_ADD_PANELIST"].format(webinar_id),
+            params=kwargs,
+            data=payload
+        )
+
+    def remove_panelist(self, webinar_id, panelist_id,  **kwargs):
+        """
+        Method to remove a Panelist from a Webinar.
+        :param webianr_id: Webinar ID
+        :param panelist_id: Panelist ID
+        :param kwargs: Query params
+        :return: Response Object
+        """
+        return self.delete_request(
+            endpoint=self.API_ENDPOINTS["WEBINAR_REMOVE_PANELIST"].format(webinar_id, panelist_id),
+            params=kwargs
+        )
+
+    def remove_panelists(self, webinar_id, payload=None, **kwargs):
+        """
+        Method to remove Panelists from a Webinar.
+        :param webianr_id: Webinar ID
+        :param payload: Dict containing Panelist details.
+        :param kwargs: Query params
+        :return: Response Object
+        """
+        return self.delete_request(
+            endpoint=self.API_ENDPOINTS["WEBINAR_REMOVE_PANELISTS"].format(webinar_id),
             params=kwargs,
             data=payload
         )
