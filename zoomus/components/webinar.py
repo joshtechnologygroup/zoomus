@@ -67,7 +67,8 @@ class WebinarComponentV2(base.BaseComponent):
         "WEBINAR_ATTENDEE_STATUS": "/webinars/{}/registrants/status",
         "WEBINAR_ADD_PANELIST": "/webinars/{}/panelists",
         "WEBINAR_REMOVE_PANELIST": "/webinars/{}/panelists/{}",
-        "WEBINAR_REMOVE_PANELISTS": "/webinars/{}/panelists/"
+        "WEBINAR_REMOVE_PANELISTS": "/webinars/{}/panelists/",
+        "WEBINAR_PANELISTS_LIST": "/webinars/{}/panelists/"
     }
 
     def list(self, user_id, **kwargs):
@@ -227,4 +228,16 @@ class WebinarComponentV2(base.BaseComponent):
             endpoint=self.API_ENDPOINTS["WEBINAR_REMOVE_PANELISTS"].format(webinar_id),
             params=kwargs,
             data=payload
+        )
+
+    def panelists(self, webinar_id, **kwargs):
+        """
+        Method to list Panelists in a Webinar.
+        :param webianr_id: Webinar ID
+        :param kwargs: Query params
+        :return: Response Object
+        """
+        return self.get_request(
+            endpoint=self.API_ENDPOINTS["WEBINAR_PANELISTS_LIST"].format(webinar_id),
+            params=kwargs
         )
